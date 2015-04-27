@@ -1,0 +1,65 @@
+<link rel="import" href="../node_modules/ui-code/src/ui-code.html">
+<link rel="import" href="../node_modules/core-ajax-npm/core-ajax.html">
+
+<polymer-element name="twilio-up" attributes="phoneNumber">
+  <template>
+    <core-ajax url="http://jobs.glgresearch.com/twilio-uptime/statuses.json"
+               auto
+               handleAs="json"
+               on-core-response="{{handleTwilioUpResponse}}">
+    </core-ajax>
+
+    <div id=phoneStatus></div>
+
+  </template>
+  <script>
+    getTwilioStatus = function(detail, phoneNumber) {
+      console.log('getTwilioStatus: %s num %d', phoneNumber, detail.length);
+
+      for (var i = 0; i < detail.length; i++) {
+        if (detail[i].phoneNumber == phoneNumber) {
+          console.log('found phoneNumber');
+
+          var transactions = detail[i].transactions;
+          status = transactions[transactions.length-1].status;
+          timeStamp = transactions[transactions.length-1].currentTimeStamp;
+          console.log("status: %s timeStamp: %s", status, timeStamp);
+
+          return transactions[transactions.length-1];
+        }
+      }
+
+      return null;
+    }
+
+    Polymer({
+      phoneNumber: '',
+      state: '',
+      status: '',
+      timeStamp: '',
+      handleTwilioUpResponse: function(event, detail, sender) {
+        console.log('handleTwilioUpResponse for phoneNumber: %s', this.phoneNumber);
+        //console.log('detail: %s', JSON.stringify(detail));
+
+        console.log('detail length: %d', detail.response.length);
+
+        for (var i = 0; i < detail.response.length; i++) {
+          var state = detail.response[i].state;
+
+          if (state === 'error' || state === 'unchecked') {
+            var transaction = getTwilioStatus(detail.response[i].detail, this.phoneNumber);
+            if (transaction !== null) {
+              this.state = state;
+              this.status = transaction.status;
+              this.timeStamp = transaction.currentTimeStamp;
+
+              this.$.phoneStatus.textContent = this.phoneNumber + ' woz ' + this.state + ' on ' + this.timeStamp
+
+              return;
+            }
+          }
+        }
+      }
+    });
+</script>
+</polymer-element>

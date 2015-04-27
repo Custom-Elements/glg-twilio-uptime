@@ -1,0 +1,17 @@
+{
+  "name": "twlio-up",
+  "version": "0.0.1",
+  "dependencies": {
+    "core-ajax-npm": "git://github.com/custom-elements/core-ajax-npm#master",
+    "marked": "^0.3.2",
+    "polymer-serve": "^0.0.30",
+    "polymer": "git://github.com/custom-elements/polymer#master",
+    "ui-fonts": "^0.0.1",
+    "ui-code": "git://github.com/custom-elements/ui-code#master",
+    "ui-styles": "git://github.com/custom-elements/ui-styles#master"
+  },
+  "license": "ISC",
+  "scripts": {
+    "test": "polymer-serve ."
+  }
+}
