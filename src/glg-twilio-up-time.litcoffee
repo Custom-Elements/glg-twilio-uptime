@@ -32,7 +32,8 @@
                       name = participant.firstName + ' ' + participant.lastName
                       if name
                         status = 'The dial-in ' + twilioDetail.phoneNumber + ' scheduled ' + upcomingCall.timeDiff + ' is down for ' + consultation.consultationTitle + ' with ' + name + ', try using ' + twilioDetail.phoneNumber
-                        this.twilioUpTimeStatus = 'Twilio Numbers down'
+                        #this.twilioUpTimeStatus = twilioDetail.phoneNumber + ' is down; use ' + twilioDetail.phoneNumber + ' instead'
+                        this.twilioUpTimeStatus = 'Jack Byrne' + ' will use this number in ' + '18 minutes' + ' for Tobacco Market | Latest Trends'
                         this.moreTwilioUpTimeStatus.push status
 
 ##Polymer Lifecycle
