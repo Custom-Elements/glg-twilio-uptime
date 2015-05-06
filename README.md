@@ -12,5 +12,5 @@ See [src/glg-twilio-uptime.litcoffee](src/glg-twilio-uptime.litcoffee) for more 
 ### Typical Usage
 
 ```html
-  <twilio-up-time phoneNumber="+3728803179"></twilio-up-time>
+  <twilio-uptime phoneNumber="+3728803179"></twilio-uptime>
 ```
