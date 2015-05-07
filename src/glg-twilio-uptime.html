@@ -1,0 +1,27 @@
+<link rel="import" href="../node_modules/ui-code/src/ui-code.html">
+<link rel="import" href="../node_modules/core-ajax-npm/core-ajax.html">
+<script src='./glg-twilio-uptime.litcoffee'></script>
+
+<polymer-element name="twilio-uptime" attributes="rmPersonId">
+  <template>
+    <link rel="stylesheet" href="./glg-twilio-uptime.less">
+    <core-ajax url="http://localhost:10000/statuses.json"
+               auto
+               handleAs="json"
+               on-core-response="{{handleTwilioUpResponse}}">
+    </core-ajax>
+    <div id='statuses'>
+      <template repeat="{{status, i in statuses}}">
+        <template if="{{i == 0}}">
+          <span id=mainMessage>{{status.mainMessage}}</span> <span id='more' on-click="{{toggleMore}}">more....</span><br/>
+        </template>
+        <template if="{{i != 0}}">
+          <span id=mainMessage>{{status.mainMessage}}</span><br/>
+        </template>
+        <template repeat="{{project in status.projects}}">
+          {{project.participant}} will use this number {{project.timeDiff}} for {{project.projectName}}<br/>
+        </template>
+      </template>
+    </div>
+  </template>
+</polymer-element>

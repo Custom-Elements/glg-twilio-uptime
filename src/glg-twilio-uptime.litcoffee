@@ -1,6 +1,6 @@
-#glg-twilio-up-time
+#glg-twilio-uptime
 
-    Polymer 'twilio-up-time',
+    Polymer 'twilio-uptime',
 
 ##Methods
 
@@ -10,12 +10,13 @@
       timeStamp: ''
       twilioUpTimeStatus: ''
       moreTwilioUpTimeStatus: []
+      statuses: []
       toggleMore: () ->
         if (this.more is true)
-          this.$.more.style.display = "none"
+          this.$.statuses.style.overflow = "hidden"
           this.more = false
         else
-          this.$.more.style.display = "block"
+          this.$.statuses.style.overflow = "visible"
           this.more = true
       handleTwilioUpResponse: (event, detail, sender) ->
         console.log 'handleTwilioUpResponse for rmPersonId: %s', this.rmPersonId
@@ -23,6 +24,8 @@
         for i, response of detail.response
           if response.state is 'ok'
             for i, twilioDetail of response.detail
+              mainMessage = ''
+              projects = []
               for j, upcomingCall of twilioDetail.upcomingCalls
                 for k, consultation of upcomingCall.consultations
                   if (consultation.primaryManager.personId is parseInt(this.rmPersonId))
@@ -31,10 +34,14 @@
                     for l, participant of participants
                       name = participant.firstName + ' ' + participant.lastName
                       if name
-                        status = 'The dial-in ' + twilioDetail.phoneNumber + ' scheduled ' + upcomingCall.timeDiff + ' is down for ' + consultation.consultationTitle + ' with ' + name + ', try using ' + twilioDetail.phoneNumber
-                        #this.twilioUpTimeStatus = twilioDetail.phoneNumber + ' is down; use ' + twilioDetail.phoneNumber + ' instead'
-                        this.twilioUpTimeStatus = 'Jack Byrne' + ' will use this number in ' + '18 minutes' + ' for Tobacco Market | Latest Trends'
-                        this.moreTwilioUpTimeStatus.push status
+                        mainMessage = twilioDetail.phoneNumber + ' is down; use ' + twilioDetail.phoneNumber + ' instead'
+                        project = {projectName: consultation.consultationTitle, timeDiff: upcomingCall.timeDiff, participant: participant.firstName + ' ' + participant.lastName}
+                        projects.push project
+
+              if (projects.length > 0)
+                status = {mainMessage: mainMessage, projects: projects}
+                this.statuses.push status
+                console.log('statuses: %s', JSON.stringify(this.statuses))
 
 ##Polymer Lifecycle
 
