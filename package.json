@@ -1,5 +1,5 @@
 {
-  "name": "glg-twlio-uptime",
+  "name": "glg-twilio-uptime",
   "version": "0.0.1",
   "dependencies": {
     "core-ajax-npm": "git://github.com/custom-elements/core-ajax-npm#master",
