@@ -5,18 +5,16 @@
 ##Methods
 
       rmPersonId: ''
-      state: ''
-      status: ''
-      timeStamp: ''
-      twilioUpTimeStatus: ''
-      moreTwilioUpTimeStatus: []
       statuses: []
+      moreText: 'more...'
       toggleMore: () ->
         if (this.more is true)
           this.$.statuses.style.overflow = "hidden"
+          this.moreText = 'more...'
           this.more = false
         else
           this.$.statuses.style.overflow = "visible"
+          this.moreText = 'less...'
           this.more = true
       handleTwilioUpResponse: (event, detail, sender) ->
         console.log 'handleTwilioUpResponse for rmPersonId: %s', this.rmPersonId
