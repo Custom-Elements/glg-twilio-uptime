@@ -1,6 +1,6 @@
 #glg-twilio-uptime
 
-    Polymer 'twilio-uptime',
+    Polymer 'glg-twilio-uptime',
 
 ##Methods
 
