@@ -21,20 +21,20 @@
 
         for i, response of detail.response
           if response.state is 'ok'
-            for i, twilioDetail of response.detail
+            for twilioDetail in response.detail
               mainMessage = ''
               projects = []
-              for j, upcomingCall of twilioDetail.upcomingCalls
+              for upcomingCall in twilioDetail.upcomingCalls
                 for consultation in upcomingCall.consultations
-                  #if (consultation.primaryManager.personId is parseInt(this.rmPersonId))
-                  console.log 'found consultation personId: %s rmPersonId %s', consultation.primaryManager.personId, this.rmPersonId
-                  participants = consultation.participants
-                  for l, participant of participants
-                    name = participant.firstName + ' ' + participant.lastName
-                    if name
-                      mainMessage = twilioDetail.phoneNumber + ' is down; use ' + twilioDetail.phoneNumber + ' instead'
-                      project = {projectName: consultation.consultationTitle, timeDiff: upcomingCall.timeDiff, participant: participant.firstName + ' ' + participant.lastName}
-                      projects.push project
+                  if (consultation.primaryManager.personId is parseInt(this.rmPersonId))
+                    console.log 'found consultation personId: %s rmPersonId %s', consultation.primaryManager.personId, this.rmPersonId
+                    participants = consultation.participants
+                    for l, participant of participants
+                      name = participant.firstName + ' ' + participant.lastName
+                      if name
+                        mainMessage = twilioDetail.phoneNumber + ' is down; use ' + twilioDetail.phoneNumber + ' instead'
+                        project = {projectName: consultation.consultationTitle, timeDiff: upcomingCall.timeDiff, participant: participant.firstName + ' ' + participant.lastName}
+                        projects.push project
 
               if (projects.length > 0)
                 status = {mainMessage: mainMessage, projects: projects}
